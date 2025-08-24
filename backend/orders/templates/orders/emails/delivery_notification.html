@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order Received - {{ order.order_number }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #d32f2f;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+        .order-number {
+            background-color: #d32f2f;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .urgent-notice {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        .section {
+            margin: 25px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #d32f2f;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 15px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .info-value {
+            color: #333;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .items-table th,
+        .items-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .items-table th {
+            background-color: #d32f2f;
+            color: white;
+            font-weight: bold;
+        }
+        .items-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .action-required {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+        .csv-attachment {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">DesiDeliver</div>
+            <h1>New Order Received</h1>
+            <div class="order-number">{{ order.order_number }}</div>
+            <p>Action Required: New order needs processing</p>
+        </div>
+
+        <div class="urgent-notice">
+            ⚠️ NEW ORDER RECEIVED - IMMEDIATE ATTENTION REQUIRED ⚠️
+        </div>
+
+        <div class="section">
+            <div class="section-title">Order Summary</div>
+            <div class="info-row">
+                <span class="info-label">Order Number:</span>
+                <span class="info-value">{{ order.order_number }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Order Date:</span>
+                <span class="info-value">{{ order_date }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Total Items:</span>
+                <span class="info-value">{{ total_items }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Order Status:</span>
+                <span class="info-value">{{ order.get_status_display }}</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Customer Information</div>
+            <div class="info-row">
+                <span class="info-label">Business Name:</span>
+                <span class="info-value">{{ business_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Contact Person:</span>
+                <span class="info-value">{{ contact_person }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Phone Number:</span>
+                <span class="info-value">{{ phone_number }}</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Delivery Details</div>
+            <div class="info-row">
+                <span class="info-label">Delivery Address:</span>
+                <span class="info-value">{{ delivery_address }}</span>
+            </div>
+            {% if order.delivery_instructions %}
+            <div class="info-row">
+                <span class="info-label">Special Instructions:</span>
+                <span class="info-value">{{ order.delivery_instructions }}</span>
+            </div>
+            {% endif %}
+            {% if order.preferred_delivery_date %}
+            <div class="info-row">
+                <span class="info-label">Preferred Delivery Date:</span>
+                <span class="info-value">{{ order.preferred_delivery_date|date:"F d, Y" }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <div class="section-title">Order Items</div>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product.item_code }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.product.unit }}</td>
+                        <td>{{ item.product.category.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="csv-attachment">
+            📎 <strong>CSV Attachment Included</strong><br>
+            The order details are also attached as a CSV file for easy processing.
+        </div>
+
+        <div class="action-required">
+            <div class="section-title">Required Actions</div>
+            <ol>
+                <li><strong>Review the order</strong> - Check all items and quantities</li>
+                <li><strong>Verify inventory</strong> - Ensure all items are available</li>
+                <li><strong>Contact customer</strong> - Confirm order details and delivery timeline</li>
+                <li><strong>Update order status</strong> - Mark as confirmed once verified</li>
+                <li><strong>Prepare for delivery</strong> - Organize items for pickup/delivery</li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <p><strong>DesiDeliver</strong> - Delivery Coordination System</p>
+            <p>Please process this order promptly and update the system accordingly.</p>
+        </div>
+    </div>
+</body>
+</html>
