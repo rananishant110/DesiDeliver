@@ -1,8 +1,9 @@
 import csv
 import io
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 from .models import Order, OrderItem
+from .catalog_mapper import CatalogMapper
 
 class CSVGenerator:
     """Utility class for generating CSV files from order data"""
@@ -214,3 +215,23 @@ class CSVGenerator:
                 'error': f'CSV parsing error: {str(e)}',
                 'row_count': 0
             }
+
+
+def generate_csv_from_text_order(order_text: str, include_category: bool = False) -> Tuple[str, List[str]]:
+    """
+    Generate CSV from text-based customer order using catalog
+    
+    Args:
+        order_text: Text containing order items (one per line: "item_code: quantity")
+        include_category: Whether to include category in CSV
+        
+    Returns:
+        Tuple of (csv_content, errors)
+    """
+    mapper = CatalogMapper()
+    order_items = mapper.parse_order_from_text(order_text)
+    
+    if not order_items:
+        return "", ["No valid order items found in input text"]
+    
+    return mapper.generate_csv_from_order(order_items, include_category)

@@ -697,3 +697,69 @@ def get_next_available_statuses(current_status):
         'cancelled': [],  # Final status
     }
     return status_flow.get(current_status, [])
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def generate_order_csv_from_text(request):
+    """
+    Generate CSV file from text-based customer order using catalog
+    
+    Expected POST data:
+    {
+        "order_text": "item_code: quantity\nitem_name, quantity\n...",
+        "include_category": false  # optional
+    }
+    
+    Returns CSV file as HTTP response
+    """
+    from .utils import generate_csv_from_text_order
+    from django.http import HttpResponse
+    
+    order_text = request.data.get('order_text', '')
+    include_category = request.data.get('include_category', False)
+    
+    if not order_text:
+        return Response(
+            {'error': 'order_text is required'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    # Generate CSV
+    csv_content, errors = generate_csv_from_text_order(order_text, include_category)
+    
+    if not csv_content:
+        return Response(
+            {
+                'error': 'Failed to generate CSV',
+                'details': errors
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    # Prepare response
+    response = HttpResponse(csv_content, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="order_catalog.csv"'
+    
+    # Include warnings if any
+    if errors:
+        response['X-Warnings'] = '; '.join(errors[:5])  # Limit to 5 warnings in header
+    
+    return response
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_catalog_stats(request):
+    """Get statistics about the catalog"""
+    from .catalog_mapper import CatalogMapper
+    
+    try:
+        mapper = CatalogMapper()
+        stats = mapper.get_catalog_stats()
+        return Response(stats, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response(
+            {'error': str(e)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )

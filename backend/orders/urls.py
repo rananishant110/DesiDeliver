@@ -23,4 +23,8 @@ urlpatterns = [
     path('daily/email/', views.send_daily_summary_email, name='send_daily_summary_email'),
     path('bulk-process/', views.bulk_process_orders, name='bulk_process_orders'),
     path('staff/', views.get_orders_for_staff, name='get_orders_for_staff'),
+    
+    # Catalog-based CSV generation
+    path('catalog/generate-csv/', views.generate_order_csv_from_text, name='generate_order_csv_from_text'),
+    path('catalog/stats/', views.get_catalog_stats, name='get_catalog_stats'),
 ]

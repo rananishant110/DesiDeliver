@@ -1,0 +1,16 @@
+# Sample Customer Order
+# Format: item_code: quantity OR item_name, quantity
+
+# By Item Code
+10026, 5
+10100: 3
+18910, 2
+
+# By Item Name
+SESAME SEED BLACK PP: 10
+VEGETABLE OIL 32.5L, 1
+COW GHEE 12X8OZ: 6
+
+# More items
+THUMS UP CAN 24X300ML, 2
+RED LABEL 6X1800G: 4
