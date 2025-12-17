@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Resolved - {{ ticket.ticket_number }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #4caf50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+        .success-icon {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        .ticket-number {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .section {
+            margin: 25px 0;
+            padding: 20px;
+            background-color: #f1f8f4;
+            border-radius: 5px;
+            border-left: 4px solid #4caf50;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+        .feedback-box {
+            background-color: #fff;
+            border: 2px dashed #4caf50;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .button-group {
+            margin: 20px 0;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #4caf50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            font-weight: bold;
+        }
+        .secondary-button {
+            background-color: #1976d2;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🛒 DesiDeliver</div>
+            <div class="success-icon">✅</div>
+            <h2>Ticket Resolved</h2>
+            <div class="ticket-number">{{ ticket.ticket_number }}</div>
+        </div>
+
+        <div class="section">
+            <p>Dear {{ customer_name }},</p>
+            <p><strong>Great news!</strong> We've resolved your support ticket and believe your issue has been addressed.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">📋 Ticket Summary</div>
+            <p><strong>Subject:</strong> {{ ticket.subject }}</p>
+            <p><strong>Category:</strong> {{ ticket.get_category_display }}</p>
+            <p><strong>Created:</strong> {{ ticket.created_at|date:"F d, Y" }}</p>
+            <p><strong>Resolved:</strong> {{ ticket.resolved_at|date:"F d, Y h:i A" }}</p>
+        </div>
+
+        <div class="feedback-box">
+            <h3>Was your issue resolved satisfactorily?</h3>
+            <p>Your feedback helps us improve our service</p>
+            <div class="button-group">
+                <a href="http://localhost:3000/tickets/{{ ticket.id }}?satisfied=yes" class="cta-button">
+                    👍 Yes, I'm Satisfied
+                </a>
+                <a href="http://localhost:3000/tickets/{{ ticket.id }}?satisfied=no" class="cta-button secondary-button">
+                    👎 No, Need More Help
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">What happens next?</div>
+            <ul>
+                <li>If you're satisfied, the ticket will be automatically closed in 48 hours</li>
+                <li>If you need further assistance, you can reopen this ticket by adding a comment</li>
+                <li>For new issues, please create a new support ticket</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="http://localhost:3000/tickets/{{ ticket.id }}" class="cta-button secondary-button">View Full Ticket</a>
+        </div>
+
+        <div class="footer">
+            <p><strong>DesiDeliver Support Team</strong></p>
+            <p>Thank you for choosing DesiDeliver!</p>
+            <p style="margin-top: 20px; font-size: 12px; color: #999;">
+                This is an automated message. Please do not reply directly to this email.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

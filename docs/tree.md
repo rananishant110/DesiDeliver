@@ -13,15 +13,53 @@ This document maintains the structure and organization of all documentation for 
   - Order management and CSV generation
   - Email notification system
 
+- **feat-ticketing-system**: Customer support ticketing system
+  - Customer ticket creation and tracking
+  - Staff ticket management dashboard
+  - Comment system for customer-staff communication
+  - Status workflow management (open → in_progress → resolved → closed)
+  - Priority levels and categorization
+  - Email notifications for ticket events
+  - Order integration for order-related issues
+
+- **feat-backend-dockerization**: Dockerize Django backend with PostgreSQL and Redis
+  - Docker containerization for consistent development and production environments
+  - Multi-stage Dockerfile for development and production
+  - Docker Compose configuration with PostgreSQL, Redis, and Django services
+  - Settings split (base.py, local.py, production.py) for environment-specific configurations
+  - Environment variable management with .env files
+  - Volume management for data persistence
+  - Production-ready with Gunicorn and WhiteNoise
+  - Health checks and restart policies
+
+### Fixes
+- **fix-signup-functionality**: Fix non-functional signup button on login page
+  - Create registration form component with Material-UI
+  - Implement complete user registration flow
+  - Wire up navigation between login and registration pages
+  - Add form validation for all required fields
+  - Integrate with existing AuthContext and backend API
+
 ### Documentation Files
-- `feat-desi-deliver-app.prd.md`: Product Requirements Document
-- `feat-desi-deliver-app.plan.md`: Development Plan and Implementation Roadmap
+- `feat-desi-deliver-app/`
+  - `feat-desi-deliver-app.prd.md`: Product Requirements Document
+  - `feat-desi-deliver-app.plan.md`: Development Plan and Implementation Roadmap
+- `feat-ticketing-system/`
+  - `feat-ticketing-system.prd.md`: Ticketing System Requirements
+  - `feat-ticketing-system.plan.md`: Ticketing System Development Plan
+- `fix-signup-functionality/`
+  - `fix-signup-functionality.prd.md`: Fix Requirements for Signup Feature
+  - `fix-signup-functionality.plan.md`: Implementation Plan for Signup Fix
+- `feat-backend-dockerization/`
+  - `feat-backend-dockerization.prd.md`: Backend Dockerization Requirements
+  - `feat-backend-dockerization.plan.md`: Docker Implementation Plan
 
 ## Project Architecture
-- **Backend**: Django with PostgreSQL
+- **Backend**: Django with PostgreSQL (Docker containerized)
 - **Frontend**: React
 - **Email Service**: SendGrid or SMTP
-- **Hosting**: Vercel (frontend) + Heroku/AWS (backend)
+- **Infrastructure**: Docker & Docker Compose
+- **Hosting**: Vercel (frontend) + Heroku/AWS/DigitalOcean (backend containers)
 
 ## Status
 - [x] PRD Document: Completed

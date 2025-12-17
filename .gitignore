@@ -35,6 +35,9 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env.prod
+backend/.env
+backend/.env.prod
 
 # IDE
 .vscode/
@@ -55,3 +58,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Docker
+backend/staticfiles/
+backend/mediafiles/
+postgres_data/
+redis_data/
