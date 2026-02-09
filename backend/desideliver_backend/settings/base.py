@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'tickets',
+    'delivery.apps.DeliveryConfig',
 ]
 
 MIDDLEWARE = [
